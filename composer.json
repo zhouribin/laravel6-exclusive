@@ -11,9 +11,17 @@
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "ext-json": "*",
+        "doctrine/dbal": "^2.9",
+        "guzzlehttp/guzzle": "^6.3",
+        "phpoffice/phpspreadsheet": "^1.6",
+        "predis/predis": "^1.1",
+        "ramsey/uuid": "^3.8",
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.6",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
