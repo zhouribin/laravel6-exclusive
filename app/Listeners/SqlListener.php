@@ -19,7 +19,7 @@ class SqlListener
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param object $event
      * @return void
      */
     public function handle($event)
@@ -31,6 +31,6 @@ class SqlListener
 
             return gettype($item) == 'string' ? "'$item'" : $item;
         }, $event->sql);
-        $this->logger->debug($rawSql, [$event->time]);
+        loggerWrite($this->logger, $rawSql, [$event->time]);
     }
 }

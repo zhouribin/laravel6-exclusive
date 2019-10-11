@@ -1,6 +1,7 @@
 <?php
 
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Config;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Ramsey\Uuid\Uuid;
@@ -29,12 +30,29 @@ function getExceptionInfo(Exception $e)
  */
 function customerLoggerHandle($logName)
 {
-    $logName = $logName . "-" . exec('whoami');
+    $logName = $logName . "-" . getWhoami();
     $log = new Logger($logName);
     $logFilePath = storage_path('logs') . "/" . $logName . ".log";
     $log->pushHandler(new RotatingFileHandler($logFilePath, 0, Logger::DEBUG));
 
     return $log;
+}
+
+function getWhoami()
+{
+    if (Config::has('WHO_AM_I')) {
+        return Config::get('WHO_AM_I');
+    }
+
+    $whoami = exec('whoami');
+    Config::set('WHO_AM_I', $whoami);
+    return $whoami;
+}
+
+function loggerWrite(Logger $logger, string $keyName, array $context = [], string $logLevel = 'info')
+{
+    $runUniqueKey = Config::get('PHP_RUN_UNIQUE_KEY', 'default');
+    $logger->$logLevel($keyName . "[$runUniqueKey]", $context);
 }
 
 /**

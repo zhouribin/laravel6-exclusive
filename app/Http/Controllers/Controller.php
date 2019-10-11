@@ -17,9 +17,9 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $result = [
-        "statusCode" => ErrorMsgConstants::RETURN_SUCCESS,
-        "message"     => "",
-        "data"        => []
+        'status_code' => ErrorMsgConstants::RETURN_SUCCESS,
+        'message'     => "",
+        'data'        => []
     ];
 
     /**
@@ -45,14 +45,14 @@ class Controller extends BaseController
     {
         $logger = customerLoggerHandle("ErrorReturn");
         $logger->debug("接口异常", getExceptionInfo($exception));
-        $this->result['statusCode'] = ErrorMsgConstants::DEFAULT_ERROR;
+        $this->result['status_code'] = ErrorMsgConstants::DEFAULT_ERROR;
         $this->result['message'] = ErrorMsgConstants::$errorMsg[ErrorMsgConstants::DEFAULT_ERROR];
         $this->result['data'] = [];
 
         if ($exception instanceof ServiceException) {
             $this->result['message'] = $exception->getMessage();
         } else {
-            $this->result['statusCode'] = $exception->getCode();
+            $this->result['status_code'] = $exception->getCode();
             $this->result['message'] = $exception->getMessage();
         }
 
